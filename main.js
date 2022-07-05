@@ -4,8 +4,8 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
-
-
+let gliphy = document.querySelectorAll(".like-glyph")
+let modal = document.getElementById("modal")
 
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
@@ -23,3 +23,33 @@ function mimicServerCall(url="http://mimicServer.example.com", config={}) {
     }, 300);
   });
 }
+
+// change error modal to "hidden"
+
+function canYouHearMeKnockin (e) {
+  let heart = e.target;
+mimicServerCall("bogus URL")
+.then (function (){
+  if (heart.innerText === EMPTY_HEART) {
+  heart.innerText = FULL_HEART
+  heart.className = "activated-heart"
+} else {
+  heart.innerText = EMPTY_HEART
+  heart.className = ""
+}
+})
+.catch(function(error) {
+  modal.textContent = error
+  modal.className = ""
+  setTimeout(() => {modal.className = "hidden"}, 3000)
+})
+}
+
+for (const glyph of gliphy){
+  glyph.addEventListener("click",canYouHearMeKnockin)
+}
+
+
+
+// 
+//
